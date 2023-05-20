@@ -48,7 +48,7 @@
     <img src="https://img.shields.io/badge/E2E%20Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white" alt="e2ecloud" />
     <img src="https://img.shields.io/badge/eclipse%20ide-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white" alt="eclipse" />
     <img src="https://img.shields.io/badge/intellij%20idea-000000?style=for-the-badge&logo=intellijidea&logoColor=white" alt="ij" />
-    <img src=" https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="jenkins" />
+    <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="jenkins" />
    
 </p>
 <br>
