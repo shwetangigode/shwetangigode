@@ -175,14 +175,14 @@ fun_facts:
 ## 💼 Experience
 
 ### 🔹 Grid Dynamics → Client: Visa Inc.
-**Software Engineer** | Jul 2024 – Present | Bengaluru, India
+**Software Engineer - Senior Builder** | Bengaluru, India
 - Designing scalable Spring Boot microservices for **Visa Direct Connect**
-- End-to-end ownership on **Exception Case Management** systems
+- End-to-end ownership on **Client Profile System (CPS)** systems
 - ~90% code coverage via SonarQube | Security scans via Sonatype & Checkmarx
 - Leveraging **GenAI-assisted development** (Copilot, Cursor, Claude)
 
 ### 🔹 Codon Software Pvt. Ltd.
-**Software Developer** | Sep 2021 – May 2024 | Hyderabad, India
+**Software Engineer** | Hyderabad, India
 - Led design & development of **e-commerce platforms** (monolithic + microservices)
 - Architecture decisions, feature dev, system refactoring, production deployments
 - Mentored developers & maintained technical documentation
