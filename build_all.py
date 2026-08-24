@@ -32,6 +32,16 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Build the full animated GitHub profile")
     ap.add_argument("--username", default="shwetangigode")
     ap.add_argument("--name", default=None, help="Display name for the terminal footer")
+    ap.add_argument(
+        "--local-image",
+        default=None,
+        help="Path to a local photo (e.g. a selfie) to use for the ASCII "
+             "portrait instead of fetching the GitHub avatar.",
+    )
+    ap.add_argument("--vertical-bias", type=float, default=0.28,
+                     help="Vertical anchor (0-1) for square-cropping --local-image")
+    ap.add_argument("--zoom", type=float, default=1.0,
+                     help="0-1: trim to the centered fraction of --local-image's square crop")
     ap.add_argument("--token", default=os.environ.get("GITHUB_TOKEN"),
                      help="GitHub token for real contribution/profile data (optional)")
     ap.add_argument("--stack", default="Python,JavaScript,TypeScript,React,Node.js,Docker,PostgreSQL,AWS")
@@ -71,7 +81,10 @@ def main() -> None:
     # 2) terminal card (ASCII portrait)
     display_name = args.name or terminal.resolve_display_name(args.username, args.token)
     with open(terminal_path, "w", encoding="utf-8") as fh:
-        fh.write(terminal.build_svg(args.username, display_name))
+        fh.write(terminal.build_svg(args.username, display_name,
+                                     local_image=args.local_image,
+                                     vertical_bias=args.vertical_bias,
+                                     zoom=args.zoom))
     print(f"[build] wrote {terminal_path}")
 
     # 3) neofetch info card
