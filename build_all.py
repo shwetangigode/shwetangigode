@@ -42,6 +42,12 @@ def main() -> None:
                      help="Vertical anchor (0-1) for square-cropping --local-image")
     ap.add_argument("--zoom", type=float, default=1.0,
                      help="0-1: trim to the centered fraction of --local-image's square crop")
+    ap.add_argument(
+        "--static",
+        action="store_true",
+        help="Never fetch a real photo for the terminal card (not even the "
+             "GitHub avatar). Renders a fixed, non-photographic avatar glyph.",
+    )
     ap.add_argument("--token", default=os.environ.get("GITHUB_TOKEN"),
                      help="GitHub token for real contribution/profile data (optional)")
     ap.add_argument("--stack", default="Python,JavaScript,TypeScript,React,Node.js,Docker,PostgreSQL,AWS")
@@ -84,7 +90,8 @@ def main() -> None:
         fh.write(terminal.build_svg(args.username, display_name,
                                      local_image=args.local_image,
                                      vertical_bias=args.vertical_bias,
-                                     zoom=args.zoom))
+                                     zoom=args.zoom,
+                                     static=args.static))
     print(f"[build] wrote {terminal_path}")
 
     # 3) neofetch info card

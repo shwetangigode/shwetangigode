@@ -3,18 +3,24 @@
 generate_terminal_card.py
 --------------------------------
 Generates `terminal-card.svg`: a macOS-style terminal window containing
-dense ASCII art of the user's GitHub avatar, revealed row-by-row with a
-sweeping cursor, followed by a `$ whoami` typewriter footer.
+dense ASCII art, revealed row-by-row with a sweeping cursor, followed by
+a `$ whoami` typewriter footer.
 
-Pipeline:
-  1. Download the GitHub avatar for `--username` (falls back to a
-     procedurally generated portrait-like placeholder if offline).
-  2. Convert it to a grayscale luminance grid with Pillow.
-  3. Map luminance -> ASCII character density ramp.
-  4. Emit each row as SVG <text>, clipped by an animated <clipPath>
+Three image sources, in order of precedence:
+  1. --static           Never touches the network or any photo. Always
+                         renders the same deterministic, non-photographic
+                         cyberpunk avatar glyph. Safest option -- nothing
+                         personally identifying is derived or published.
+  2. --local-image PATH Use a local photo (auto-cropped + contrast-boosted).
+  3. (default)           Fetch the user's public GitHub avatar.
+
+Pipeline (for either photo source):
+  1. Convert to a grayscale luminance grid with Pillow.
+  2. Map luminance -> ASCII character density ramp (dark -> dense glyph).
+  3. Emit each row as SVG <text>, clipped by an animated <clipPath>
      rect whose width grows left-to-right (the "typing" reveal), with
      a bright cursor block riding the same edge via synced SMIL.
-  5. Footer: `$ whoami` types out, then the resolved display name
+  4. Footer: `$ whoami` types out, then the resolved display name
      appears, then a blinking cursor.
 
 Pure SMIL only -- no CSS animations, no JS. Self-contained SVG.
@@ -99,30 +105,45 @@ def fetch_avatar(username: str, size: int = 200) -> Image.Image:
         img = ImageOps.autocontrast(img, cutoff=1)
         return img
     except Exception as exc:  # noqa: BLE001
-        print(f"[terminal] avatar fetch failed ({exc}); using generated placeholder")
-        return _placeholder_portrait(username, size)
+        print(f"[terminal] avatar fetch failed ({exc}); using static avatar")
+        return static_avatar(username, size)
 
 
-def _placeholder_portrait(seed_text: str, size: int) -> Image.Image:
-    """A deterministic, portrait-shaped radial placeholder so the
-    pipeline always has something interesting to render offline.
+def static_avatar(seed_text: str, size: int) -> Image.Image:
+    """A deterministic, non-photographic cyberpunk avatar glyph -- no
+    real photo, no network call, nothing personally identifying. Same
+    output every time for a given seed, so it reads as an intentional
+    design choice rather than a broken fallback.
 
     Tones are chosen for the "dark pixel -> dense glyph" ASCII mapping:
     a bright background (255) fades to blank space, while the darker
-    subject silhouette renders as visible glyphs.
+    silhouette + visor renders as visible glyphs.
     """
     rng = random.Random(sum(ord(c) for c in seed_text) or 1)
     img = Image.new("L", (size, size), color=255)
     draw = ImageDraw.Draw(img)
 
     cx, cy = size / 2, size / 2 - size * 0.05
-    # head
     head_r = size * 0.30
+
+    # head + shoulders silhouette
     draw.ellipse([cx - head_r, cy - head_r * 1.15, cx + head_r, cy + head_r * 1.15], fill=60)
-    # shoulders
     draw.ellipse([cx - size * 0.42, cy + head_r * 0.55, cx + size * 0.42, cy + size * 0.85],
                  fill=110)
-    # some procedural "facial" gradient texture
+
+    # a horizontal "visor" band across the eye-line -- reads as a
+    # deliberate cyberpunk design element (glasses/HUD), not a face
+    visor_h = head_r * 0.32
+    draw.rectangle(
+        [cx - head_r * 0.92, cy - visor_h * 0.5, cx + head_r * 0.92, cy + visor_h * 0.5],
+        fill=15,
+    )
+    # a couple of thin "scan line" accents below the visor
+    for i in range(2):
+        yy = cy + visor_h * 1.3 + i * visor_h * 0.9
+        draw.rectangle([cx - head_r * 0.55, yy, cx + head_r * 0.55, yy + visor_h * 0.18], fill=40)
+
+    # deterministic procedural texture (same seed -> same output, always)
     for _ in range(40):
         x = rng.uniform(cx - head_r, cx + head_r)
         y = rng.uniform(cy - head_r, cy + head_r)
@@ -218,8 +239,13 @@ def glyph_color(lum: int) -> str:
 
 def build_svg(username: str, display_name: str, cols: int = COLS,
               local_image: Optional[str] = None, vertical_bias: float = 0.28,
-              zoom: float = 1.0) -> str:
-    if local_image:
+              zoom: float = 1.0, static: bool = False) -> str:
+    if static:
+        # Never touches the network or any photo -- purely a deterministic,
+        # non-photographic design. Use this when a real/avatar photo is
+        # not something you want derived into a public ASCII asset.
+        img = static_avatar(username, 200)
+    elif local_image:
         img = load_local_image(local_image, vertical_bias=vertical_bias, zoom=zoom)
     else:
         img = fetch_avatar(username)
@@ -474,12 +500,19 @@ def main() -> None:
         help="0-1: keep only the centered fraction of the square crop, to "
              "trim a busy background. Only applies with --local-image.",
     )
+    ap.add_argument(
+        "--static",
+        action="store_true",
+        help="Never fetch a real photo (not even the GitHub avatar) or read "
+             "--local-image. Always renders the same deterministic, "
+             "non-photographic cyberpunk avatar glyph for this username.",
+    )
     args = ap.parse_args()
 
     display_name = args.name or resolve_display_name(args.username, args.token)
     svg = build_svg(args.username, display_name, cols=args.cols,
                      local_image=args.local_image, vertical_bias=args.vertical_bias,
-                     zoom=args.zoom)
+                     zoom=args.zoom, static=args.static)
     with open(args.out, "w", encoding="utf-8") as fh:
         fh.write(svg)
     print(f"[terminal] wrote {args.out} ({len(svg):,} bytes)")
