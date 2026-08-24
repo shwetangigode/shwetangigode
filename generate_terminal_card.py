@@ -29,7 +29,7 @@ import random
 from typing import List, Optional
 
 import requests
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 # --------------------------------------------------------------------------
 # ASCII conversion settings
@@ -42,6 +42,52 @@ COLS = 46
 CHAR_ASPECT = 0.52
 
 
+def crop_to_square(img: Image.Image, vertical_bias: float = 0.28) -> Image.Image:
+    """Center-crop a portrait/landscape photo to a square.
+
+    `vertical_bias` controls where the crop window sits vertically for
+    portrait photos: 0.0 = anchored to the top of the image, 1.0 =
+    anchored to the bottom, 0.5 = dead center. A small bias (~0.25-0.3)
+    keeps headroom above the face while still including the shoulders,
+    which reads better once turned into a square ASCII avatar than a
+    pure center crop.
+    """
+    w, h = img.size
+    side = min(w, h)
+    if w >= h:
+        x0 = int((w - side) * 0.5)
+        y0 = int((h - side) * 0.5)
+    else:
+        x0 = int((w - side) * 0.5)
+        y0 = int((h - side) * vertical_bias)
+    return img.crop((x0, y0, x0 + side, y0 + side))
+
+
+def load_local_image(path: str, size: int = 400, vertical_bias: float = 0.28,
+                      zoom: float = 1.0) -> Image.Image:
+    """Load a local photo, square-crop it, boost contrast, and convert
+    to grayscale for the ASCII pipeline.
+
+    `zoom` (0 < zoom <= 1) keeps only the centered `zoom` fraction of the
+    square crop, e.g. 0.8 trims 20% off each edge -- handy for cropping
+    out a busy background (like an office ceiling) that would otherwise
+    turn into distracting ASCII noise.
+    """
+    img = Image.open(path)
+    img = ImageOps.exif_transpose(img)  # respect phone camera orientation
+    img = img.convert("L")
+    img = crop_to_square(img, vertical_bias=vertical_bias)
+    if zoom < 1.0:
+        w, h = img.size
+        new_side = int(w * zoom)
+        x0 = (w - new_side) // 2
+        y0 = (h - new_side) // 2
+        img = img.crop((x0, y0, x0 + new_side, y0 + new_side))
+    img = img.resize((size, size), Image.LANCZOS)
+    img = ImageOps.autocontrast(img, cutoff=1)
+    return img
+
+
 def fetch_avatar(username: str, size: int = 200) -> Image.Image:
     """Fetch the user's GitHub avatar. Falls back to a generated
     placeholder portrait if the network is unavailable."""
@@ -50,6 +96,7 @@ def fetch_avatar(username: str, size: int = 200) -> Image.Image:
         r = requests.get(url, timeout=10)
         r.raise_for_status()
         img = Image.open(io.BytesIO(r.content)).convert("L")
+        img = ImageOps.autocontrast(img, cutoff=1)
         return img
     except Exception as exc:  # noqa: BLE001
         print(f"[terminal] avatar fetch failed ({exc}); using generated placeholder")
@@ -58,24 +105,29 @@ def fetch_avatar(username: str, size: int = 200) -> Image.Image:
 
 def _placeholder_portrait(seed_text: str, size: int) -> Image.Image:
     """A deterministic, portrait-shaped radial placeholder so the
-    pipeline always has something interesting to render offline."""
+    pipeline always has something interesting to render offline.
+
+    Tones are chosen for the "dark pixel -> dense glyph" ASCII mapping:
+    a bright background (255) fades to blank space, while the darker
+    subject silhouette renders as visible glyphs.
+    """
     rng = random.Random(sum(ord(c) for c in seed_text) or 1)
-    img = Image.new("L", (size, size), color=0)
+    img = Image.new("L", (size, size), color=255)
     draw = ImageDraw.Draw(img)
 
     cx, cy = size / 2, size / 2 - size * 0.05
     # head
     head_r = size * 0.30
-    draw.ellipse([cx - head_r, cy - head_r * 1.15, cx + head_r, cy + head_r * 1.15], fill=210)
+    draw.ellipse([cx - head_r, cy - head_r * 1.15, cx + head_r, cy + head_r * 1.15], fill=60)
     # shoulders
     draw.ellipse([cx - size * 0.42, cy + head_r * 0.55, cx + size * 0.42, cy + size * 0.85],
-                 fill=150)
+                 fill=110)
     # some procedural "facial" gradient texture
     for _ in range(40):
         x = rng.uniform(cx - head_r, cx + head_r)
         y = rng.uniform(cy - head_r, cy + head_r)
         r = rng.uniform(2, 10)
-        v = rng.randint(60, 255)
+        v = rng.randint(0, 190)
         draw.ellipse([x - r, y - r, x + r, y + r], fill=v)
 
     img = img.filter(ImageFilter.GaussianBlur(2))
@@ -94,7 +146,12 @@ def image_to_ascii_rows(img: Image.Image, cols: int = COLS) -> List[str]:
         row_chars = []
         for x in range(cols):
             lum = pixels[x, y]  # 0 (black) .. 255 (white)
-            idx = int((255 - lum) / 255 * ramp_len)
+            # Dark pixels -> dense glyphs, bright pixels -> sparse/blank.
+            # This is the conventional ASCII-art mapping and matters a lot
+            # for real photos: a bright background (e.g. an office ceiling)
+            # should fade toward blank, not dominate the frame with dense
+            # characters just because it's well-lit.
+            idx = int(lum / 255 * ramp_len)
             row_chars.append(RAMP[idx])
         lines.append("".join(row_chars))
     return lines
@@ -159,8 +216,13 @@ def glyph_color(lum: int) -> str:
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
-def build_svg(username: str, display_name: str, cols: int = COLS) -> str:
-    img = fetch_avatar(username)
+def build_svg(username: str, display_name: str, cols: int = COLS,
+              local_image: Optional[str] = None, vertical_bias: float = 0.28,
+              zoom: float = 1.0) -> str:
+    if local_image:
+        img = load_local_image(local_image, vertical_bias=vertical_bias, zoom=zoom)
+    else:
+        img = fetch_avatar(username)
     ascii_rows = image_to_ascii_rows(img, cols)
     lum_rows = luminance_rows(img, cols)
     n_rows = len(ascii_rows)
@@ -390,10 +452,34 @@ def main() -> None:
     ap.add_argument("--token", default=os.environ.get("GITHUB_TOKEN"))
     ap.add_argument("--cols", type=int, default=COLS)
     ap.add_argument("--out", default="terminal-card.svg")
+    ap.add_argument(
+        "--local-image",
+        default=None,
+        help="Path to a local photo to use instead of fetching the GitHub "
+             "avatar (e.g. a selfie). Auto-cropped to a square and "
+             "contrast-boosted before ASCII conversion.",
+    )
+    ap.add_argument(
+        "--vertical-bias",
+        type=float,
+        default=0.28,
+        help="0.0-1.0: where the square crop sits vertically on a portrait "
+             "photo (0=top-anchored/more headroom below, 1=bottom-anchored). "
+             "Only applies with --local-image.",
+    )
+    ap.add_argument(
+        "--zoom",
+        type=float,
+        default=1.0,
+        help="0-1: keep only the centered fraction of the square crop, to "
+             "trim a busy background. Only applies with --local-image.",
+    )
     args = ap.parse_args()
 
     display_name = args.name or resolve_display_name(args.username, args.token)
-    svg = build_svg(args.username, display_name, cols=args.cols)
+    svg = build_svg(args.username, display_name, cols=args.cols,
+                     local_image=args.local_image, vertical_bias=args.vertical_bias,
+                     zoom=args.zoom)
     with open(args.out, "w", encoding="utf-8") as fh:
         fh.write(svg)
     print(f"[terminal] wrote {args.out} ({len(svg):,} bytes)")
