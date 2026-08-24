@@ -41,7 +41,7 @@ jobs:
             --username shwetangigode \
             --name "Shwetangi Gode" \
             --static \
-            --role "Senior SWE @ Visa (via Grid Dynamics)" \
+            --role "Senior Builder — End-to-End Owner" \
             --bio "Payments engineer. Java, Spring Boot, GenAI." \
             --stack "Java,Spring Boot,Kubernetes,Docker,Oracle,MySQL,Jenkins,Grafana" \
             --highlights "Award:Engineer of the Year|Perf:+80% throughput|GenAI:+40% faster dev" \

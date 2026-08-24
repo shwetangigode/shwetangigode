@@ -1,6 +1,6 @@
 <!-- Animated Header -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:58a6ff&height=200&section=header&text=Shwetangi%20Gode&fontSize=42&fontColor=58a6ff&fontAlignY=35&desc=Senior%20Software%20Engineer%20%7C%20Java%20%7C%20Spring%20Boot%20%7C%20Microservices%20%7C%20GenAI&descSize=16&descAlignY=55&descColor=8b949e&animation=fadeIn" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:58a6ff&height=200&section=header&text=Shwetangi%20Gode&fontSize=42&fontColor=58a6ff&fontAlignY=35&desc=Senior%20Builder%20%7C%20Java%20%7C%20Spring%20Boot%20%7C%20Microservices%20%7C%20GenAI&descSize=16&descAlignY=55&descColor=8b949e&animation=fadeIn" width="100%" />
 </p>
 
 <!-- Typing SVG -->
@@ -45,7 +45,7 @@
 
 ```yaml
 name: Shwetangi Gode
-role: Senior Software Engineer @ Visa (via Grid Dynamics)
+role: Senior Builder @ Visa (via Grid Dynamics) — End-to-End Owner
 domain: Value-Added Services | Payments
 location: Bengaluru, Karnataka, India
 education: B.E. in Electronics & Communications Engineering
@@ -57,7 +57,7 @@ achievements:
 
 currently_working_on:
   - Visa Direct Connect (API-based money movement)
-  - Exception Case Management systems
+  - Client Profile System (CPS)
   - GenAI-assisted development workflows
 
 fun_facts:
@@ -182,7 +182,7 @@ fun_facts:
 - Leveraging **GenAI-assisted development** (Copilot, Cursor, Claude)
 
 ### 🔹 Codon Software Pvt. Ltd.
-**Software Engineer** | Hyderabad, India
+**Software Developer** | Sep 2021 – May 2024 | Hyderabad, India
 - Led design & development of **e-commerce platforms** (monolithic + microservices)
 - Architecture decisions, feature dev, system refactoring, production deployments
 - Mentored developers & maintained technical documentation
