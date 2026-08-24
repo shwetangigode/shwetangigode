@@ -24,6 +24,23 @@
 
 ---
 
+<!-- PROFILE-SVG:START -->
+## 🖥️ Terminal Portrait & Live Stats
+
+<table>
+<tr>
+<td valign="top"><img src="terminal-card.svg" alt="ASCII Portrait Terminal" /></td>
+<td valign="top"><img src="info-card.svg" alt="Neofetch Info Card" /></td>
+</tr>
+</table>
+
+<p align="center">
+  <img src="github-contribution-animation.svg" alt="Contribution Graph" width="100%" />
+</p>
+<!-- PROFILE-SVG:END -->
+
+---
+
 ## 🚀 About Me
 
 ```yaml
