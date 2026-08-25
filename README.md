@@ -82,7 +82,7 @@ fun_facts:
 ## 🏅 Awards & Recognition
 
 - 🏆 **Engineer of the Year** — Grid Dynamics, for contributions to Visa payment systems · 2025
-- 🤝 **Team Player of the Year** — Codon Software · 2022 & 2023
+- 🤝 **Team Player of the Year** — Codon Software
 - 🎓 **RTMNU University Topper** — 6th Rank
 
 ---
