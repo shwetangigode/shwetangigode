@@ -83,7 +83,7 @@ fun_facts:
 
 - 🏆 **Engineer of the Year** — Grid Dynamics, for contributions to Visa payment systems · 2025
 - 🤝 **Team Player of the Year** — Codon Software · 2022 & 2023
-- 🎓 **RTMNU University Topper** — 6th Rank · 2019
+- 🎓 **RTMNU University Topper** — 6th Rank
 
 ---
 
@@ -155,7 +155,7 @@ fun_facts:
 Microservices • Distributed Systems • Event-Driven Architecture • Monolith-to-Microservices Migration
 
 ### ⚡ Messaging & Event Streaming
-Apache Kafka event streams • Spring Batch ingestion pipelines • SWIFT-channel integrations • Email-based ingestion (Microsoft 365)
+Apache Kafka event streams • Spring Batch ingestion pipelines • BFM batch jobs • SWIFT-channel integrations • Email-based ingestion (Microsoft 365)
 
 ### 🔁 Reliability Engineering
 DB-driven retry mechanisms • Zero-loss case intake • End-to-end traceability across distributed workflows • ~90% automated test coverage
@@ -216,11 +216,12 @@ GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40
 **Software Engineer - Senior Builder** | Bengaluru, India
 - Designing scalable Spring Boot microservices for **Visa Direct Connect**
 - End-to-end ownership on **Client Profile System (CPS)** systems
+- Batch processing using **BFM jobs** for scheduled, high-volume data workflows
 - ~90% code coverage via SonarQube | Security scans via Sonatype & Checkmarx
 - Leveraging **GenAI-assisted development** (Copilot, Cursor, Claude)
 
 ### 🔹 Codon Software Pvt. Ltd.
-**Software Developer** | Sep 2021 – May 2024 | Hyderabad, India
+**Software Developer** | Hyderabad, India
 - Led design & development of **e-commerce platforms** (monolithic + microservices)
 - Architecture decisions, feature dev, system refactoring, production deployments
 - Mentored developers & maintained technical documentation
@@ -249,6 +250,7 @@ Capability breakdown across the systems I've built and owned end-to-end:
       <ul>
         <li>Apache Kafka event streams</li>
         <li>Spring Batch pipelines</li>
+        <li>BFM batch jobs</li>
         <li>SWIFT-channel ingestion</li>
         <li>Email ingestion (MS365)</li>
         <li>DB-driven retry logic</li>
