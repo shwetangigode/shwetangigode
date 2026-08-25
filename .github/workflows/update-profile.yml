@@ -1,12 +1,13 @@
 name: Update animated profile SVGs
 
-# terminal-card.svg uses a fixed, non-photographic avatar glyph
-# (--static below) -- no photo, no GitHub avatar fetch, nothing
-# personally identifying is ever derived or published from this
-# workflow. Safe to run on a public repo.
+# terminal-card.svg is generated from avatar.jpg (committed to this repo)
+# via --local-image below. If you ever want to go back to a fully
+# non-photographic, privacy-safe placeholder instead, replace the
+# --local-image / --vertical-bias / --zoom lines with a single --static
+# flag -- see generate_terminal_card.py --help for details.
 #
-# The contribution graph and info-card stats still refresh from live
-# GitHub data on each run; only the terminal card's image is static.
+# The contribution graph, info-card, and stats-card all refresh from
+# live GitHub data on each run.
 #
 # Two ways this workflow fires:
 #   1. On a schedule (every 6 hours) -- fully hands-off.
@@ -40,7 +41,9 @@ jobs:
           python3 build_all.py \
             --username shwetangigode \
             --name "Shwetangi Gode" \
-            --static \
+            --local-image avatar.jpg \
+            --vertical-bias 0.15 \
+            --zoom 0.72 \
             --role "Senior Builder — End-to-End Owner" \
             --bio "Payments engineer. Java, Spring Boot, GenAI." \
             --stack "Java,Spring Boot,Kubernetes,Docker,Oracle,MySQL,Jenkins,Grafana" \
