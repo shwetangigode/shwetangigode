@@ -43,6 +43,10 @@
 
 ## 🚀 About Me
 
+<table width="100%" border="0">
+<tr>
+<td width="55%" valign="top">
+
 ```yaml
 name: Shwetangi Gode
 role: Senior Builder @ Visa (via Grid Dynamics) — End-to-End Owner
@@ -66,9 +70,28 @@ fun_facts:
   - 🎨 Sketching as creative outlet
 ```
 
+</td>
+<td width="45%" align="center" valign="middle">
+<img src="about-visual.svg" width="100%" alt="Systems diagram" />
+</td>
+</tr>
+</table>
+
+---
+
+## 🏅 Awards & Recognition
+
+- 🏆 **Engineer of the Year** — Grid Dynamics, for contributions to Visa payment systems · 2025
+- 🤝 **Team Player of the Year** — Codon Software · 2022 & 2023
+- 🎓 **RTMNU University Topper** — 6th Rank · 2019
+
 ---
 
 ## 🛠️ Tech Stack & Tools
+
+<table width="100%">
+<tr>
+<td width="55%" valign="top">
 
 ### Languages
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
@@ -93,6 +116,7 @@ fun_facts:
 
 ### Databases
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Liquibase](https://img.shields.io/badge/Liquibase-2962FF?style=for-the-badge&logo=liquibase&logoColor=white)
 
@@ -123,6 +147,25 @@ fun_facts:
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white)
 ![Confluence](https://img.shields.io/badge/Confluence-172B4D?style=for-the-badge&logo=confluence&logoColor=white)
+
+</td>
+<td width="45%" valign="top">
+
+### 🏗️ Architecture & Systems Design
+Microservices • Distributed Systems • Event-Driven Architecture • Monolith-to-Microservices Migration
+
+### ⚡ Messaging & Event Streaming
+Apache Kafka event streams • Spring Batch ingestion pipelines • SWIFT-channel integrations • Email-based ingestion (Microsoft 365)
+
+### 🔁 Reliability Engineering
+DB-driven retry mechanisms • Zero-loss case intake • End-to-end traceability across distributed workflows • ~90% automated test coverage
+
+### 🤖 GenAI-Assisted Development
+GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40%
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -181,6 +224,50 @@ fun_facts:
 - Led design & development of **e-commerce platforms** (monolithic + microservices)
 - Architecture decisions, feature dev, system refactoring, production deployments
 - Mentored developers & maintained technical documentation
+
+---
+
+## 🚀 Engineering Experience
+
+Capability breakdown across the systems I've built and owned end-to-end:
+
+<table width="100%">
+  <tr>
+    <td width="33%" valign="top">
+      <h3>🌐 Backend & APIs</h3>
+      <ul>
+        <li>REST APIs (Spring Boot)</li>
+        <li>Spring JPA & Hibernate</li>
+        <li>MapStruct object mapping</li>
+        <li>Exception Case Management</li>
+        <li>Client Profile System (CPS)</li>
+        <li>Payment processing workflows</li>
+      </ul>
+    </td>
+    <td width="33%" valign="top">
+      <h3>⚡ Event-Driven & Messaging</h3>
+      <ul>
+        <li>Apache Kafka event streams</li>
+        <li>Spring Batch pipelines</li>
+        <li>SWIFT-channel ingestion</li>
+        <li>Email ingestion (MS365)</li>
+        <li>DB-driven retry logic</li>
+        <li>Zero-loss case intake</li>
+      </ul>
+    </td>
+    <td width="34%" valign="top">
+      <h3>🛠️ Quality, Cloud & Observability</h3>
+      <ul>
+        <li>Kubernetes & Docker</li>
+        <li>Jenkins CI/CD, AWS EC2</li>
+        <li>JUnit & Mockito (~90% coverage)</li>
+        <li>SonarQube, Checkmarx, Sonatype</li>
+        <li>Splunk, Grafana, Prometheus</li>
+        <li>Liquibase schema versioning</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ---
 
