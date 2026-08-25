@@ -337,7 +337,7 @@ def build_svg(username: str, display_name: str, cols: int = COLS,
     # title (left-aligned, starting clear of the traffic-light dots)
     parts.append(
         f'<text x="{win_left + 62}" y="{win_top + 18}" font-size="10.5" '
-        f'fill="{MUTED}" letter-spacing="0.3">{xml_escape(username)} — ascii.portrait</text>'
+        f'fill="{MUTED}" letter-spacing="0.3">{xml_escape(username)}</text>'
     )
 
     # ---- ASCII art rows -----------------------------------------------
