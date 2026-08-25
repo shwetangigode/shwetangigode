@@ -194,7 +194,7 @@ GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40
 |:---:|:---:|:---|:---:|
 | 🔫 | **Quickdraw** | Close an Issue/PR within 5 min of opening | ⬜ |
 | 🦈 | **Pull Shark** | Get 2+ pull requests merged | ⬜ |
-| 🤪 | **YOLO** | Merge a PR without code review | ⬜ |
+| 🤪 | **YOLO** | Merge a PR without code review | ✅ |
 | 🧠 | **Galaxy Brain** | Get 2 answers accepted in GitHub Discussions | ⬜ |
 | 👥 | **Pair Extraordinaire** | Co-author a merged pull request | ⬜ |
 | ⭐ | **Starstruck** | Get a repo to 16+ stars | ⬜ |
