@@ -221,7 +221,7 @@ GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40
 - Leveraging **GenAI-assisted development** (Copilot, Cursor, Claude)
 
 ### 🔹 Codon Software Pvt. Ltd.
-**Software Developer** | Hyderabad, India
+**Software Developer** | Sep 2021 – May 2024 | Hyderabad, India
 - Led design & development of **e-commerce platforms** (monolithic + microservices)
 - Architecture decisions, feature dev, system refactoring, production deployments
 - Mentored developers & maintained technical documentation
