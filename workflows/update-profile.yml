@@ -1,0 +1,57 @@
+name: Update animated profile SVGs
+
+# terminal-card.svg uses a fixed, non-photographic avatar glyph
+# (--static below) -- no photo, no GitHub avatar fetch, nothing
+# personally identifying is ever derived or published from this
+# workflow. Safe to run on a public repo.
+#
+# The contribution graph and info-card stats still refresh from live
+# GitHub data on each run; only the terminal card's image is static.
+#
+# Two ways this workflow fires:
+#   1. On a schedule (every 6 hours) -- fully hands-off.
+#   2. On demand -- open the repo's "Actions" tab, select this workflow,
+#      and click "Run workflow" for an instant refresh.
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+  workflow_dispatch: {}       # manual "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate SVGs + update README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 build_all.py \
+            --username shwetangigode \
+            --name "Shwetangi Gode" \
+            --static \
+            --role "Senior Builder — End-to-End Owner" \
+            --bio "Payments engineer. Java, Spring Boot, GenAI." \
+            --stack "Java,Spring Boot,Kubernetes,Docker,Oracle,MySQL,Jenkins,Grafana" \
+            --highlights "Award:Engineer of the Year|Perf:+80% throughput|GenAI:+40% faster dev" \
+            --anchor "## 🚀 About Me" \
+            --heading "## 🖥️ Terminal Portrait & Live Stats"
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md github-contribution-animation.svg terminal-card.svg info-card.svg
+          git diff --quiet --cached || git commit -m "chore: refresh animated profile SVGs"
+          git push
