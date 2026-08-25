@@ -116,18 +116,22 @@ def xml_escape(s: str) -> str:
              .replace(">", "&gt;").replace('"', "&quot;"))
 
 
-def build_svg(username: str, stats: dict) -> str:
+def build_svg(username: str, stats: dict, streaks: dict = None) -> str:
+    streaks = streaks or {"current_streak": 0, "longest_streak": 0}
     win_left, win_top = 12, 14
     win_w = WIDTH - win_left * 2
-    height = 260
-    win_h = height - win_top - 14
 
     metrics = [
         ("REPOS", stats["public_repos"], ORANGE),
         ("STARS", stats["stars"], CYAN),
         ("FOLLOWERS", stats["followers"], GREEN),
         ("FOLLOWING", stats["following"], PURPLE),
+        ("STREAK", streaks["current_streak"], ORANGE),
+        ("LONGEST", streaks["longest_streak"], CYAN),
     ]
+
+    height = 260
+    win_h = height - win_top - 14
 
     languages = stats["languages"]
     total = sum(c for _, c in languages) or 1
@@ -254,7 +258,18 @@ def main() -> None:
     args = ap.parse_args()
 
     stats = fetch_stats(args.username, args.token)
-    svg = build_svg(args.username, stats)
+
+    # streaks come from the same contribution data used for the animated
+    # calendar -- self-hosted, no third-party streak service involved.
+    import generate_contribution_graph as contrib
+    grid = None
+    if args.token:
+        grid = contrib.fetch_real_contributions(args.username, args.token)
+    if grid is None:
+        grid = contrib.generate_synthetic_contributions()
+    streaks = contrib.compute_streaks(grid)
+
+    svg = build_svg(args.username, stats, streaks)
     with open(args.out, "w", encoding="utf-8") as fh:
         fh.write(svg)
     print(f"[stats] wrote {args.out} ({len(svg):,} bytes)")

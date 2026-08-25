@@ -299,11 +299,7 @@ def build_svg(username: str, display_name: str, cols: int = COLS,
         y = art_top + i * CHAR_H
         parts.append(
             f'<clipPath id="rowClip{i}">'
-            f'<rect x="{art_left}" y="{y - CHAR_H + 3}" width="0" height="{CHAR_H}">'
-            f'<animate attributeName="width" from="0" to="{art_w}" '
-            f'begin="{round(0.5 + i * row_delay, 3)}s" dur="{row_dur}s" '
-            f'fill="freeze" calcMode="spline" keySplines="0.3 0.9 0.2 1"/>'
-            f"</rect>"
+            f'<rect x="{art_left}" y="{y - CHAR_H + 3}" width="{art_w}" height="{CHAR_H}"/>'
             f"</clipPath>"
         )
     parts.append("</defs>")
@@ -363,20 +359,33 @@ def build_svg(username: str, display_name: str, cols: int = COLS,
                 run_color = color
                 run_start = x
         row_markup = "".join(spans)
+
+        # Reveal via plain opacity fade on a <g> wrapper -- the same
+        # technique already proven to animate correctly for info-card.svg
+        # and github-contribution-animation.svg. (An earlier version used
+        # an <animate> on a <clipPath>'s rect width to fake a left-to-right
+        # "typing" wipe; animating geometry *inside* a referenced clipPath
+        # is inconsistently supported across renderers, so it's avoided
+        # here in favor of a mechanism with a track record of working.)
+        begin = round(0.35 + i * row_delay, 3)
         parts.append(
-            f'<text x="{art_left}" y="{y}" font-size="9" clip-path="url(#rowClip{i})" '
+            f'<g opacity="0">'
+            f'<animate attributeName="opacity" from="0" to="1" begin="{begin}s" '
+            f'dur="{row_dur}s" fill="freeze"/>'
+            f'<text x="{art_left}" y="{y}" font-size="9" '
             f'xml:space="preserve">{row_markup}</text>'
+            f"</g>"
         )
-        # sweeping cursor block riding the reveal edge of this row
-        begin = round(0.5 + i * row_delay, 3)
+        # brief cursor flash at the start of this row -- a plain rect
+        # opacity/x animation (not nested inside a clipPath), same
+        # reliable category as the fade above.
         parts.append(
             f'<rect x="{art_left}" y="{y - CHAR_H + 3}" width="6" height="{CHAR_H}" '
-            f'fill="{CURSOR_COLOR}" opacity="0.92" filter="url(#termGlow)">'
+            f'fill="{CURSOR_COLOR}" opacity="0" filter="url(#termGlow)">'
+            f'<animate attributeName="opacity" values="0;0.92;0" keyTimes="0;0.4;1" '
+            f'begin="{begin}s" dur="{row_dur + 0.1}s" fill="freeze"/>'
             f'<animate attributeName="x" from="{art_left}" to="{art_left + art_w}" '
-            f'begin="{begin}s" dur="{row_dur}s" fill="freeze" calcMode="spline" '
-            f'keySplines="0.3 0.9 0.2 1"/>'
-            f'<animate attributeName="opacity" values="0.92;0.92;0" '
-            f'keyTimes="0;0.85;1" begin="{begin}s" dur="{row_dur + 0.05}s" fill="freeze"/>'
+            f'begin="{begin}s" dur="{row_dur + 0.1}s" fill="freeze"/>'
             f"</rect>"
         )
 
@@ -385,7 +394,7 @@ def build_svg(username: str, display_name: str, cols: int = COLS,
     prompt = "$ whoami"
     answer = display_name
 
-    prompt_delay = total_art_time + 0.35
+    prompt_delay = total_art_time + 0.5
     char_dur = 0.045
     prompt_time = len(prompt) * char_dur
 

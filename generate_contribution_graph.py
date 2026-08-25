@@ -191,6 +191,41 @@ def generate_synthetic_contributions(seed: Optional[int] = None) -> List[List[in
 # --------------------------------------------------------------------------
 # SVG building
 # --------------------------------------------------------------------------
+def compute_streaks(grid: List[List[int]]) -> dict:
+    """Compute current + longest contribution streaks from the same
+    week-major grid used to draw the calendar. `grid[week][day]` is a
+    0-4 intensity level; day index 0 = Sunday ... 6 = Saturday, matching
+    GitHub's own week layout.
+
+    Flattens the grid into chronological order (oldest week/day first)
+    and scans for consecutive non-zero days. "Current streak" only
+    counts if it runs up to the most recent day in the window; a gap on
+    the very last day resets it to 0, same convention GitHub itself uses.
+    """
+    days: List[bool] = []
+    for week in grid:
+        for level in week:
+            days.append(level > 0)
+
+    longest = 0
+    run = 0
+    for had_contribution in days:
+        if had_contribution:
+            run += 1
+            longest = max(longest, run)
+        else:
+            run = 0
+
+    current = 0
+    for had_contribution in reversed(days):
+        if had_contribution:
+            current += 1
+        else:
+            break
+
+    return {"current_streak": current, "longest_streak": longest}
+
+
 def diagonal_index(week: int, day: int) -> int:
     """Bottom-left -> top-right sweep: front-line = week - day.
     Bottom-left cell (week=0, day=DAYS-1) is the most negative,

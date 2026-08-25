@@ -184,12 +184,6 @@ GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40
   <img src="stats-card.svg" alt="GitHub Stats" width="100%" />
 </p>
 
-<p align="center">
-  <a href="https://github.com/shwetangigode">
-    <img src="https://streak-stats.demolab.com/?user=shwetangigode&theme=github-dark-blue&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakLabel=58a6ff" width="60%" alt="GitHub Streak" />
-  </a>
-</p>
-
 ---
 
 ## 🏅 GitHub Achievements

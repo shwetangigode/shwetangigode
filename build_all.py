@@ -107,8 +107,9 @@ def main() -> None:
 
     # 4) self-hosted GitHub stats + top languages (replaces flaky 3rd-party badges)
     live_stats = stats_card.fetch_stats(args.username, args.token)
+    streaks = contrib.compute_streaks(grid)  # reuse the same grid drawn above, stays consistent
     with open(stats_path, "w", encoding="utf-8") as fh:
-        fh.write(stats_card.build_svg(args.username, live_stats))
+        fh.write(stats_card.build_svg(args.username, live_stats, streaks))
     print(f"[build] wrote {stats_path}")
 
     # 5) README injection
