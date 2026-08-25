@@ -24,6 +24,7 @@ import os
 
 import generate_contribution_graph as contrib
 import generate_info_card as info
+import generate_stats_card as stats_card
 import generate_terminal_card as terminal
 import inject_readme
 
@@ -73,6 +74,7 @@ def main() -> None:
     contrib_path = os.path.join(args.outdir, "github-contribution-animation.svg")
     terminal_path = os.path.join(args.outdir, "terminal-card.svg")
     info_path = os.path.join(args.outdir, "info-card.svg")
+    stats_path = os.path.join(args.outdir, "stats-card.svg")
 
     # 1) contribution graph
     grid = None
@@ -103,7 +105,13 @@ def main() -> None:
                                  bio_override=args.bio, highlights=highlights))
     print(f"[build] wrote {info_path}")
 
-    # 4) README injection
+    # 4) self-hosted GitHub stats + top languages (replaces flaky 3rd-party badges)
+    live_stats = stats_card.fetch_stats(args.username, args.token)
+    with open(stats_path, "w", encoding="utf-8") as fh:
+        fh.write(stats_card.build_svg(args.username, live_stats))
+    print(f"[build] wrote {stats_path}")
+
+    # 5) README injection
     block = inject_readme.build_block(
         os.path.basename(terminal_path),
         os.path.basename(info_path),
