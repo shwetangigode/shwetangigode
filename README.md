@@ -106,6 +106,7 @@ fun_facts:
 ![MapStruct](https://img.shields.io/badge/MapStruct-FF6600?style=for-the-badge&logoColor=white)
 ![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
 ![Mockito](https://img.shields.io/badge/Mockito-78A641?style=for-the-badge&logoColor=white)
+![Karate](https://img.shields.io/badge/Karate-1B1F23?style=for-the-badge&logo=karate&logoColor=white)
 
 ### Cloud, DevOps & Infrastructure
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
