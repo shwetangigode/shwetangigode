@@ -169,7 +169,7 @@ GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40
 
 ---
 
-## 🏆 Certifications
+## 🏆 Certifications 
 
 ![API Security](https://img.shields.io/badge/API_Security_Fundamentals-APIsec_University-blue?style=for-the-badge)
 ![Java Certificate](https://img.shields.io/badge/Java_Certificate-Oracle-ED8B00?style=for-the-badge&logo=oracle)
