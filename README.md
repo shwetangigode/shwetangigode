@@ -224,7 +224,7 @@ GitHub Copilot • Cursor • Claude — used daily to cut dev cycle time by ~40
 
 ---
 
-## 🚀 Engineering Experience
+## 🚀 Engineering Experience 
 
 Capability breakdown across the systems I've built and owned end-to-end:
 
