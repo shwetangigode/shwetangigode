@@ -3,7 +3,7 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:58a6ff&height=200&section=header&text=Shwetangi%20Gode&fontSize=42&fontColor=58a6ff&fontAlignY=35&desc=Senior%20Builder%20%7C%20Java%20%7C%20Spring%20Boot%20%7C%20Microservices%20%7C%20GenAI&descSize=16&descAlignY=55&descColor=8b949e&animation=fadeIn" width="100%" />
 </p>
 
-<!-- Typing SVG -->
+<!-- Typing SVG  -->
 <p align="center">
   <a href="https://git.io/typing-svg">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Building+High-Scale+Payment+Systems;Java+%7C+Spring+Boot+%7C+Microservices;Kubernetes+%7C+Cloud+Native+%7C+CI%2FCD;Engineer+of+the+Year+Award+Winner+%F0%9F%8F%86;GenAI-Powered+Development+Advocate" alt="Typing SVG" />
