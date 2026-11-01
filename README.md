@@ -79,8 +79,6 @@ fun_facts:
 
 ---
 
-## 🎬 Intro
-
 <p align="center">
   <img src="intro-video-v2.gif" width="100%" alt="Shwetangi Gode intro" />
 </p>
