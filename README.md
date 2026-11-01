@@ -79,6 +79,14 @@ fun_facts:
 
 ---
 
+## 🎬 Intro
+
+<p align="center">
+  <img src="intro-video-v2.gif" width="100%" alt="Shwetangi Gode intro" />
+</p>
+
+---
+
 ## 🏅 Awards & Recognition
 
 - 🏆 **Engineer of the Year** — Grid Dynamics, for contributions to Visa payment systems · 2025
