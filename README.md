@@ -80,7 +80,7 @@ fun_facts:
 ---
 
 <p align="center">
-  <img src="intro-video-v2.gif" width="100%" alt="Shwetangi Gode intro" />
+  <img src="intro-video-hq.webp" width="100%" alt="Shwetangi Gode intro" />
 </p>
 
 ---
