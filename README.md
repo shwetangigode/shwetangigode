@@ -157,6 +157,32 @@ fun_facts:
 ![Jira](https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white)
 ![Confluence](https://img.shields.io/badge/Confluence-172B4D?style=for-the-badge&logo=confluence&logoColor=white)
 
+
+### Languages
+<img src="https://skillicons.dev/icons?i=java,js,html" />
+
+### Frameworks & Libraries
+<img src="https://skillicons.dev/icons?i=spring,hibernate" />
+
+### Cloud, DevOps & Infrastructure
+<img src="https://skillicons.dev/icons?i=kafka,kubernetes,docker,jenkins,linux,aws" />
+
+### Databases
+<img src="https://skillicons.dev/icons?i=mysql,postgres,oracle" />
+
+### Monitoring & Observability
+<img src="https://skillicons.dev/icons?i=grafana,prometheus" />
+
+### Testing & API
+<img src="https://skillicons.dev/icons?i=postman" />
+
+### GenAI & Productivity
+<img src="https://skillicons.dev/icons?i=githubcopilot,cursor" />
+
+### IDEs & Tools
+<img src="https://skillicons.dev/icons?i=idea,vscode,git,jira,confluence" />
+
+
 </td>
 <td width="45%" valign="top">
 
